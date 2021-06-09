@@ -33,8 +33,10 @@ user.valid?
 
 ### errorsメソッドとは
 - エラーメッセージをハッシュ形式で取得する
-- errors.full_messagesでエラーメッセージを配列で取得する
-- errors.full_messages_for(:カラム名)で特定のカラムに対するバリデーションエラーのメッセージを取得する
+- errors.messagesでエラーメッセージをハッシュで取得する
+- errors.messages[:カラム名]でエラーメッセージ配列で取得する
+- errors.full_messagesで全てのエラーメッセージを配列で取得する
+- errors.full_messages_for(:カラム名)で特定のカラムに対するバリデーションエラーの全てメッセージを取得する
 - errors.any?でエラーの有無を判定できる（any?メソッドは、モデルのデータが有る場合true、ない場合falseを返す）
 
 ```ruby
@@ -52,6 +54,12 @@ user.errors
 #<ActiveModel::Error attribute=assignment_year, type=blank, options={}>, 
 #<ActiveModel::Error attribute=encrypted_password, type=blank, options={}>
 ]>
+
+user.errors.messages
+=> {:password=>["を入力してください"], :user_name=>["を入力してください", "は不正な値です"], :last_name=>["を入力してください"], :first_name=>["を入力してください"], :assignment_year=>["を入力してください"], :encrypted_password=>["を入力してください"]}
+
+user.errors.messages[:user_name]
+=> ["を入力してください", "は不正な値です"]
 
 user.errors.full_messages
 => ["パスワードを入力してください", "ユーザー名を入力してください", "ユーザー名は不正な値です", "苗字を入力してください", "名前を入力してください", "研究室配属年度を入力してください", "暗号化パスワードを入力してください"]
